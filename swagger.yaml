@@ -1,12 +1,9 @@
 openapi: 3.0.0
-
 info:
   title: ω bbs
   version: 0.0.0
-
 servers:
   - url: https://xn--omega.com/api
-
 paths:
   /posts/{post_id}:
     get:
@@ -16,22 +13,150 @@ paths:
         - name: post_id
           in: path
           required: true
-          schema:
-            type: string
+          schema: { type: string }
       responses:
         200:
-          description: ""
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Post"
-
+                $ref: '#/components/schemas/Post'
 components:
   schemas:
     Post:
       type: object
       properties:
-        id:
-          type: number
-        title:
+        id: { type: number }
+        bodyType:
           type: string
+          enum:
+            - text/markdown
+            - text/plain
+        body: { type: string }
+        authorId: { type: number }
+        threadId:
+          type: number
+          description: Id of the thread where the thread located
+        createdAt: { type: number }
+        updatedAt: { type: number }
+        deletedAt: { type: number }
+      required:
+        - bodyType
+        - body
+        - authorId
+        - threadId
+        - craetedAt
+        - updatedAt
+    Thread:
+      type: object
+      properties:
+        id: { type: number }
+        title: { type: string }
+        boardId: { type: number }
+        authorId: { type: number }
+        rootPostId: { type: number }
+        lastPostId: { type: number }
+        visible:
+          type: boolean
+          default: true
+        createdAt: { type: number }
+        updatedAt: { type: number }
+        deletedAt: { type: number }
+      required:
+        - title
+        - boardId
+        - visible
+        - authorId
+        - rootPostId
+        - lastPostId
+        - createdAt
+        - updatedAt
+    Board:
+      type: object
+      properties:
+        id: { type: number }
+        slug:
+          type: string
+          description: for url only
+        name: { type: string }
+        className:
+          type: string
+          description: for display only
+        description:
+          type: string
+          description: should be rendered as HTML
+      required:
+        - slug
+        - name
+    User:
+      type: object
+      properties:
+        id: { type: number }
+        username:
+          type: string
+          description: '@ and login, unique and immutable'
+        displayName:
+          type: string
+          description: displays in post author, not unique
+        email: { type: string }
+        hashedPassword:
+          type: string
+          description: bcrypt
+        bio: { type: string }
+        role: { type: number }
+        avatar:
+          type: string
+          description: uploaded avatar will save into db as url; needs regenerate if storage driver updated
+        avatarId:
+          type: number
+          description: null if the avatar is not uploaded manually
+        lastLoggedInAt: { type: number }
+        createdAt: { type: number }
+      required:
+        - username
+        - email
+        - hashedPassword
+        - role
+        - createdAt
+    Role:
+      type: object
+      properties:
+        id: { type: number }
+        permissions:
+          type: array
+          items: { type: string }
+        title: { type: string }
+      required:
+        - permissions
+        - title
+    File:
+      type: object
+      properties:
+        id: { type: number }
+        postId:
+          type: number
+          description: null if this file is not associated with any post (avatar or so)
+        authorId: { type: number }
+        filename: { type: string }
+        mime: { type: string }
+        hash: { type: string }
+        size:
+          type: number
+          description: in bytes
+        storageDriver: { type: string }
+        path: { type: string }
+        url:
+          type: string
+          description: calculated at runtime
+        createdAt: { type: number }
+        deletedAt: { type: number }
+      required:
+        - authorId
+        - filename
+        - mime
+        - hash
+        - size
+        - storageDriver
+        - path
+        - url
+        - cratedAt
