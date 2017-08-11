@@ -139,7 +139,7 @@ type Board {
 	id: ID!
 	slug: String!
 	name: String!
-	className: String
+	theme: String
 	description: String
 	topics: [Topic]!
 }
