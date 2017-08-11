@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "apollo-codegen introspect-schema typedef.graphql --output schema.json"
+    "build": "apollo-codegen introspect-schema *.graphql --output schema.json"
   },
   "dependencies": {
     "apollo-codegen": "^0.16.5"
