@@ -1,5 +1,7 @@
 scalar Date
+
 scalar Buffer
+
 type Query {
   # 获取板块列表
   allBoards: Board
@@ -14,6 +16,7 @@ type Query {
   # 获取用户
   userById(id: ID!): User
 }
+
 type Mutation {
   # 回帖
   newPost(topidId: ID!, post: PostInput!): Post
@@ -34,6 +37,7 @@ type Mutation {
   # 更新用户信息
   updateUser(user: UpdateUserInput): User
 }
+
 # 通用排序方式；按创建时间或按更新时间
 enum Order {
   createdAsc
@@ -48,6 +52,7 @@ enum PostBodyType {
   plain
   markdown
 }
+
 type Post {
   id: ID!
   bodyType: PostBodyType!
@@ -62,6 +67,7 @@ type Post {
   updatedAt: Date
   deletedAt: Date
 }
+
 # 回贴 or 修改
 input PostInput {
   bodyType: PostBodyType!
@@ -83,6 +89,7 @@ type Topic {
   updatedAt: Date
   deletedAt: Date
 }
+
 # 发主题 / 修改主题
 input TopicInput {
   rootPost: PostInput
@@ -100,6 +107,7 @@ type Comment {
   updatedAt: Date
   deletedAt: Date
 }
+
 # 发楼中楼 / 修改楼中楼
 input CommentInput {
   body: String
@@ -111,7 +119,9 @@ enum FileUsage {
   avatar
   post
 }
+
 union FileAssociated = User | Post
+
 type File {
   id: ID!
   usage: FileUsage!
@@ -127,6 +137,7 @@ type File {
   createdAt: Date!
   deletedAt: Date
 }
+
 # 上传文件
 input FileInput {
   usage: FileUsage!
@@ -161,12 +172,14 @@ type User {
   role: Role!
   createdAt: Date!
 }
+
 # 新用户
 input NewUserInput {
   username: String!
   email: String!
   password: String!
 }
+
 # 修改用户
 input UpdateUserInput {
   id: ID!
