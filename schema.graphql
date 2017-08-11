@@ -1,71 +1,71 @@
 scalar Date
 scalar Buffer
 type Query {
-	# 获取板块列表
-	allBoards: Board
-	# 通过 id 获取板块
-	boardById(id: ID!): Board
+  # 获取板块列表
+  allBoards: Board
+  # 通过 id 获取板块
+  boardById(id: ID!): Board
   # 通过 url slug 获取板块
-	boardBySlug(slug: String!): Board
-	# 获取帖子列表
-	allTopics: Topic
-	# 获取帖子
-	topicById(id: ID!): Topic
-	# 获取用户
-	userById(id: ID!): User
+  boardBySlug(slug: String!): Board
+  # 获取帖子列表
+  allTopics: Topic
+  # 获取帖子
+  topicById(id: ID!): Topic
+  # 获取用户
+  userById(id: ID!): User
 }
 type Mutation {
-	# 回帖
-	newPost(topidId: ID!, post: PostInput!): Post
-	# 修改回帖（或者主题的内容）
-	updatePost(id: ID!, post: PostInput!): Post
-	# 发贴
-	newTopic(topic: TopicInput): Topic
-	# 修改主题内容、元数据、转移板块（只改内容也可以用 updatePost）
-	updateTopic(id: ID!, topic: TopicInput): Topic
+  # 回帖
+  newPost(topidId: ID!, post: PostInput!): Post
+  # 修改回帖（或者主题的内容）
+  updatePost(id: ID!, post: PostInput!): Post
+  # 发贴
+  newTopic(topic: TopicInput): Topic
+  # 修改主题内容、元数据、转移板块（只改内容也可以用 updatePost）
+  updateTopic(id: ID!, topic: TopicInput): Topic
   # 楼中楼
   newComment(postId: ID!, comment: CommentInput): Comment
   # 修改楼中楼
   updateComment(id: ID!, comment: CommentInput): Comment
-	# 上传图片
-	newFile(file: FileInput): File
-	# 注册
-	newUser(user: NewUserInput): User
-	# 更新用户信息
-	updateUser(user: UpdateUserInput): User
+  # 上传图片
+  newFile(file: FileInput): File
+  # 注册
+  newUser(user: NewUserInput): User
+  # 更新用户信息
+  updateUser(user: UpdateUserInput): User
 }
 # 通用排序方式；按创建时间或按更新时间
 enum Order {
-	createdAsc
-	createdDesc
-	updatedAsc
-	updatedDesc
+  createdAsc
+  createdDesc
+  updatedAsc
+  updatedDesc
 }
 
 # --- 帖子 --
 
 enum PostBodyType {
-	plain
-	markdown
+  plain
+  markdown
 }
 type Post {
-	id: ID!
-	bodyType: PostBodyType!
+  id: ID!
+  bodyType: PostBodyType!
   body: String!
-	author: User!
-	topic: Topic!
+  author: User!
+  topic: Topic!
   referencesBy: [Post]!
   referencesTo: [Post]!
   comments: [Comment]!
   files: [File]!
-	createdAt: Date!
-	updatedAt: Date
-	deletedAt: Date
+  createdAt: Date!
+  updatedAt: Date
+  deletedAt: Date
 }
 # 回贴 or 修改
 input PostInput {
-	bodyType: PostBodyType!
-	body: String!
+  bodyType: PostBodyType!
+  body: String!
   quotePostIds: [ID]!
   referencesTo: [ID]!
 }
@@ -73,21 +73,21 @@ input PostInput {
 # --- 主题 ---
 
 type Topic {
-	id: ID!
-	title: String!
-	board: Board!
-	rootPost: Post!
-	lastPost: Post!
-	posts(order: Order): [Post]!
-	createdAt: Date!
-	updatedAt: Date
-	deletedAt: Date
+  id: ID!
+  title: String!
+  board: Board!
+  rootPost: Post!
+  lastPost: Post!
+  posts(order: Order): [Post]!
+  createdAt: Date!
+  updatedAt: Date
+  deletedAt: Date
 }
 # 发主题 / 修改主题
 input TopicInput {
-	rootPost: PostInput
-	title: String!
-	boardId: ID!
+  rootPost: PostInput
+  title: String!
+  boardId: ID!
 }
 
 # --- 楼中楼 ---
@@ -108,77 +108,77 @@ input CommentInput {
 # --- 文件 ---
 
 enum FileUsage {
-	avatar
-	post
+  avatar
+  post
 }
 union FileAssociated = User | Post
 type File {
-	id: ID!
-	usage: FileUsage!
-	usedIn: FileAssociated
-	author: User!
-	filename: String!
-	mime: String!
-	hash: String!
-	size: String!
-	storageDriver: String!
-	path: String!
-	url: String!
-	createdAt: Date!
-	deletedAt: Date
+  id: ID!
+  usage: FileUsage!
+  usedIn: FileAssociated
+  author: User!
+  filename: String!
+  mime: String!
+  hash: String!
+  size: String!
+  storageDriver: String!
+  path: String!
+  url: String!
+  createdAt: Date!
+  deletedAt: Date
 }
 # 上传文件
 input FileInput {
-	usage: FileUsage!
-	filename: String!
-	mime: String!
-	content: Buffer!
-	associatedId: ID
+  usage: FileUsage!
+  filename: String!
+  mime: String!
+  content: Buffer!
+  associatedId: ID
 }
 
 # --- 板块 ---
 
 type Board {
-	id: ID!
-	slug: String!
-	name: String!
-	theme: String
-	description: String
-	topics: [Topic]!
+  id: ID!
+  slug: String!
+  name: String!
+  theme: String
+  description: String
+  topics: [Topic]!
 }
 
 # --- 用户 ---
 
 type User {
-	id: ID!
-	username: String!
-	displayName: String
-	email: String # null if private
-	bio: String
-	avatarUrl: String
-	avatarFile: File
-	lastLoggedInAt: Date
-	role: Role!
-	createdAt: Date!
+  id: ID!
+  username: String!
+  displayName: String
+  email: String # null if private
+  bio: String
+  avatarUrl: String
+  avatarFile: File
+  lastLoggedInAt: Date
+  role: Role!
+  createdAt: Date!
 }
 # 新用户
 input NewUserInput {
-	username: String!
-	email: String!
-	password: String!
+  username: String!
+  email: String!
+  password: String!
 }
 # 修改用户
 input UpdateUserInput {
-	id: ID!
-	bio: String
-	role: ID!
-	avatarFileId: ID!
+  id: ID!
+  bio: String
+  role: ID!
+  avatarFileId: ID!
 }
 
 # --- 角色 ---
 
 type Role {
-	id: ID!
-	permissions: [String]!
-	title: String
+  id: ID!
+  permissions: [String]!
+  title: String
 }
