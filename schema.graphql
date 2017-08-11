@@ -18,11 +18,15 @@ type Mutation {
 	# 回帖
 	newPost(topidId: ID!, post: PostInput!): Post
 	# 修改回帖（或者主题的内容）
-	updatePost(postId: ID!, post: PostInput!): Post
+	updatePost(id: ID!, post: PostInput!): Post
 	# 发贴
 	newTopic(topic: TopicInput): Topic
 	# 修改主题内容、元数据、转移板块（只改内容也可以用 updatePost）
-	updateTopic(topic: TopicInput): Topic
+	updateTopic(id: ID!, topic: TopicInput): Topic
+  # 楼中楼
+  newComment(postId: ID!, comment: CommentInput): Comment
+  # 修改楼中楼
+  updateComment(id: ID!, comment: CommentInput): Comment
 	# 上传图片
 	newFile(file: FileInput): File
 	# 注册
@@ -50,6 +54,8 @@ type Post {
   body: String!
 	author: User!
 	topic: Topic!
+  quotes: [Post]!
+  comments: [Comment]!
 	createdAt: Date!
 	updatedAt: Date
 	deletedAt: Date
@@ -58,6 +64,7 @@ type Post {
 input PostInput {
 	bodyType: PostBodyType!
 	body: String!
+  quotePostIds: [ID]!
 }
 
 # --- 主题 ---
@@ -78,6 +85,21 @@ input TopicInput {
 	rootPost: PostInput
 	title: String!
 	boardId: ID!
+}
+
+# --- 楼中楼 ---
+
+type Comment {
+  id: ID!
+  body: String!
+  author: User!
+  createdAt: Date!
+  updatedAt: Date
+  deletedAt: Date
+}
+# 发楼中楼 / 修改楼中楼
+input CommentInput {
+  body: String
 }
 
 # --- 文件 ---
