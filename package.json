@@ -3,9 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "apollo-codegen introspect-schema *.graphql --output schema.json"
+    "build": "apollo-codegen introspect-schema *.graphql --output schema.json",
+    "prettier": "prettier --write *.graphql",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.graphql": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "apollo-codegen": "^0.16.5"
+  },
+  "devDependencies": {
+    "prettier": "^1.5.3"
   }
 }
