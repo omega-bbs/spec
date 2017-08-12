@@ -20,11 +20,15 @@ const azogi = new Azogi();
 azogi.onExhausted = function(i) {
   this.push(
     [
-      randomItem("我 你 楼下 楼上 楼主 沙发 板凳 隔壁".split(" ")),
-      randomItem("妈 爸 室友 家长 同学 老师".split(" ")),
-      randomItem("今天 昨天 前天 上次 去年 以前 一直".split(" ")),
-      randomItem("认识一个 是一个 特么是 就是一个".split(" ")),
-      randomItem("奇葩 好人 傻逼".split(" "))
+      randomItem(
+        "JavaScript EMCAScript CoffeeScript IcedScript TypeScript Flow ActionScript PHP".split(
+          " "
+        )
+      ),
+      randomItem("是 不是 可能是 大概是 应该是 一定是 可能不是 大概不是 应该不是 一定不是".split(" ")),
+      randomItem("东半球 西半球 南半球 北半球 地球上 世界上 我会的 我知道的 我听说过的".split(" ")),
+      randomItem("最好的 最差的 最先进的 最落后的 最垃圾的 最优雅的".split(" ")),
+      randomItem("脚本语言 语言".split(" "))
     ].join("")
   );
 };
