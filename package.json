@@ -9,11 +9,15 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{graphql,js}": ["prettier --write", "git add"]
+    "*.{graphql,js}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "apollo-codegen": "^0.16.5",
     "apollo-server-express": "^1.1.0",
+    "azogi": "0.0.4",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "graphql-tools": "^1.1.0",

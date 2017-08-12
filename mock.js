@@ -9,7 +9,28 @@ const {
   addMockFunctionsToSchema
 } = require("graphql-tools");
 
+const Azogi = require("azogi");
+
+const randomItem = function(array) {
+  return array[Math.floor(Math.random() * array.length)];
+};
+
+const azogi = new Azogi();
+
+azogi.onExhausted = function(i) {
+  this.push(
+    [
+      randomItem("我 你 楼下 楼上 楼主 沙发 板凳 隔壁".split(" ")),
+      randomItem("妈 爸 室友 家长 同学 老师".split(" ")),
+      randomItem("今天 昨天 前天 上次 去年 以前 一直".split(" ")),
+      randomItem("认识一个 是一个 特么是 就是一个".split(" ")),
+      randomItem("奇葩 好人 傻逼".split(" "))
+    ].join("")
+  );
+};
+
 const resolverFunctions = {
+  // TODO: move it to a separated npm package
   Date: new GraphQLScalarType({
     name: "Date",
     description: "Date scalar type",
@@ -41,7 +62,9 @@ const schema = makeExecutableSchema({
   resolvers: resolverFunctions
 });
 const mocks = {
-  Date: () => new Date()
+  ID: () => Math.floor(Math.random() * 1e6) + "",
+  Date: () => new Date(Date.now() - Math.random() * 1e8),
+  String: () => azogi.nextParagraph(300, 100)
 };
 addMockFunctionsToSchema({
   schema,
