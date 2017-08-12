@@ -5,14 +5,11 @@
   "scripts": {
     "start": "node ./mock.js",
     "build": "apollo-codegen introspect-schema *.graphql --output schema.json",
-    "prettier": "prettier --write *.graphql",
+    "prettier": "prettier --write *.{graphql,js}",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.graphql": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{graphql,js}": ["prettier --write", "git add"]
   },
   "devDependencies": {
     "apollo-codegen": "^0.16.5",
