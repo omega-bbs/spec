@@ -46,6 +46,10 @@ enum Order {
   updatedDesc
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+}
+
 # --- 帖子 --
 
 enum PostBodyType {
@@ -61,11 +65,22 @@ type Post {
   topic: Topic!
   referencesBy: [Post]!
   referencesTo: [Post]!
-  comments: [Comment]!
+  comments(first: Int, after: ID, order: Order): Comments
   files: [File]!
   createdAt: Date!
   updatedAt: Date
   deletedAt: Date
+}
+
+type PostEdge {
+  node: Post!
+  cursor: ID!
+}
+
+type Posts {
+  edges: [PostEdge]!
+  pageInfo: PageInfo!
+  count: Int!
 }
 
 # 回贴 or 修改
@@ -84,10 +99,21 @@ type Topic {
   board: Board!
   rootPost: Post!
   lastPost: Post!
-  posts(order: Order): [Post]!
+  posts(first: Int, after: ID, order: Order): Posts!
   createdAt: Date!
   updatedAt: Date
   deletedAt: Date
+}
+
+type TopicEdge {
+  node: Topic!
+  cursor: ID!
+}
+
+type Topics {
+  edges: [TopicEdge]!
+  pageInfo: PageInfo!
+  count: Int!
 }
 
 # 发主题 / 修改主题
@@ -106,6 +132,17 @@ type Comment {
   createdAt: Date!
   updatedAt: Date
   deletedAt: Date
+}
+
+type CommentEdge {
+  node: Comment!
+  cursor: ID!
+}
+
+type Comments {
+  edges: [CommentEdge]!
+  pageInfo: PageInfo!
+  count: Int!
 }
 
 # 发楼中楼 / 修改楼中楼
@@ -155,7 +192,7 @@ type Board {
   name: String!
   theme: String
   description: String
-  topics: [Topic]!
+  topics(first: Int, after: ID, order: Order): Topics!
 }
 
 # --- 用户 ---
