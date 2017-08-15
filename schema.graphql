@@ -38,7 +38,7 @@ type Mutation {
   updateUser(user: UpdateUserInput): User
 }
 
-# 通用排序方式；按创建时间或按更新时间
+# 通用排序方式；按创建时间或按更新时间；必须成对出现
 enum Order {
   createdAsc
   createdDesc
@@ -66,6 +66,7 @@ type Post {
   referencesBy: [Post]!
   referencesTo: [Post]!
   comments(first: Int, after: ID, order: Order): Comments
+  commentCount: Int!
   files: [File]!
   createdAt: Date!
   updatedAt: Date
@@ -74,13 +75,12 @@ type Post {
 
 type PostEdge {
   node: Post!
-  cursor: ID!
+  cursor: String!
 }
 
 type Posts {
   edges: [PostEdge]!
   pageInfo: PageInfo!
-  count: Int!
 }
 
 # 回贴 or 修改
@@ -100,6 +100,7 @@ type Topic {
   rootPost: Post!
   lastPost: Post!
   posts(first: Int, after: ID, order: Order): Posts!
+  postCount: Int!
   createdAt: Date!
   updatedAt: Date
   deletedAt: Date
@@ -107,13 +108,12 @@ type Topic {
 
 type TopicEdge {
   node: Topic!
-  cursor: ID!
+  cursor: String!
 }
 
 type Topics {
   edges: [TopicEdge]!
   pageInfo: PageInfo!
-  count: Int!
 }
 
 # 发主题 / 修改主题
@@ -136,13 +136,12 @@ type Comment {
 
 type CommentEdge {
   node: Comment!
-  cursor: ID!
+  cursor: String!
 }
 
 type Comments {
   edges: [CommentEdge]!
   pageInfo: PageInfo!
-  count: Int!
 }
 
 # 发楼中楼 / 修改楼中楼
@@ -193,6 +192,7 @@ type Board {
   theme: String
   description: String
   topics(first: Int, after: ID, order: Order): Topics!
+  topicCount: Int
 }
 
 # --- 用户 ---
