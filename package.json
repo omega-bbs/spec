@@ -1,5 +1,5 @@
 {
-  "name": "spec",
+  "name": "@omega-bbs/spec",
   "version": "0.0.0",
   "private": true,
   "scripts": {
