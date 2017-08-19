@@ -59,13 +59,15 @@ enum PostBodyType {
 
 type Post {
   id: ID!
+  # 楼层号；0=楼主
+  sequence: Int!
   bodyType: PostBodyType!
   body: String!
   author: User!
   topic: Topic!
   referencesBy: [Post]!
   referencesTo: [Post]!
-  comments(first: Int, after: ID, order: Order): Comments
+  comments(first: Int, after: String, order: Order): Comments
   commentCount: Int!
   files: [File]!
   createdAt: Date!
@@ -75,7 +77,8 @@ type Post {
 
 type PostEdge {
   node: Post!
-  cursor: String!
+  # cursor 即楼层号
+  cursor: Int!
 }
 
 type Posts {
@@ -99,7 +102,8 @@ type Topic {
   board: Board!
   rootPost: Post!
   lastPost: Post!
-  posts(first: Int, after: ID, order: Order): Posts!
+  # after 即 cursor 即楼层号
+  posts(first: Int, after: Int, order: Order): Posts!
   postCount: Int!
   createdAt: Date!
   updatedAt: Date
@@ -191,7 +195,7 @@ type Board {
   name: String!
   theme: String
   description: String
-  topics(first: Int, after: ID, order: Order): Topics!
+  topics(first: Int, after: String, order: Order): Topics!
   topicCount: Int
 }
 
