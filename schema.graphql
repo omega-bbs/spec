@@ -4,7 +4,7 @@ scalar Buffer
 
 type Query {
   # 获取板块列表
-  allBoards: Board
+  allBoards: [Board]
   # 通过 id 获取板块
   boardById(id: ID!): Board
   # 通过 url slug 获取板块
