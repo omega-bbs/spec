@@ -1,6 +1,7 @@
 const { GraphQLScalarType } = require('graphql')
 const { Kind } = require('graphql/language')
 const fs = require('fs')
+const casual = require('casual')
 const express = require('express')
 const bodyParser = require('body-parser')
 const { graphqlExpress } = require('apollo-server-express')
@@ -68,7 +69,14 @@ const schema = makeExecutableSchema({
 const mocks = {
   ID: () => Math.floor(Math.random() * 1e6) + '',
   Date: () => new Date(Date.now() - Math.random() * 1e8),
-  String: () => azogi.nextParagraph(300, 100)
+  String: () => azogi.nextParagraph(300, 100),
+  Board: () => ({
+    slug: casual.word,
+    name: casual.word
+  }),
+  Topic: () => ({
+    title: casual.title
+  })
 }
 addMockFunctionsToSchema({
   schema,
