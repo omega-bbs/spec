@@ -244,4 +244,5 @@ type Role {
 type Permission {
   id: ID!
   name: String!
+  description: String!
 }
