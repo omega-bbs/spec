@@ -1,7 +1,7 @@
 {
   "name": "@omega-bbs/spec",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node ./mock.js",
     "build": "apollo-codegen introspect-schema *.graphql --output schema.json",
