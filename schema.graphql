@@ -55,6 +55,7 @@ type PageInfo {
 # --- 帖子 --
 
 enum PostBodyType {
+  ast
   plain
   markdown
 }
@@ -135,6 +136,7 @@ type Comment {
   id: ID!
   body: String!
   author: User!
+  post: Post!
   createdAt: Date!
   updatedAt: Date
   deletedAt: Date
@@ -172,7 +174,7 @@ type File {
   filename: String!
   mime: String!
   hash: String!
-  size: String!
+  bytes: Int!
   storageDriver: String!
   path: String!
   url: String!
@@ -235,6 +237,11 @@ input UpdateUserInput {
 
 type Role {
   id: ID!
-  permissions: [String]!
+  permissions: [Permission]!
   title: String
+}
+
+type Permission {
+  id: ID!
+  name: String!
 }
