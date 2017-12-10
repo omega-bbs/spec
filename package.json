@@ -8,6 +8,7 @@
     "lint": "prettier --no-semi --single-quote --list-different *.{graphql,js}",
     "prettier": "prettier --no-semi --single-quote --write *.{graphql,js}",
     "precommit": "lint-staged",
+    "prepublish": "npm run build",
     "pub": "npm publish --access public"
   },
   "lint-staged": {
