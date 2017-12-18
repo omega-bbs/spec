@@ -18,14 +18,14 @@
     ]
   },
   "devDependencies": {
-    "apollo-codegen": "^0.16.5",
+    "apollo-codegen": "^0.18.1",
     "apollo-server-express": "^1.1.0",
     "azogi": "0.0.4",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "graphql-tools": "^1.1.0",
+    "graphql-tools": "^2.12.0",
     "husky": "^0.14.3",
-    "lint-staged": "^4.0.3",
+    "lint-staged": "^6.0.0",
     "prettier": "^1.5.3"
   },
   "dependencies": {
